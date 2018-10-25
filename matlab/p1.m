@@ -62,8 +62,19 @@ ylim([-100 55])
 title('Windowed Signal Compared to its Transform (Hamming), ff=.33')
 grid on 
 
+figure(4)
+subplot(2,1,1)
+hold on
+grid on
+sig_tr_mag_sfdrcalc = 20*log10(fftshift(abs(fft(windowed_sig)-fft(windowed_pure))));
+sig_tr_mag_sfdrcalc = sig_tr_mag_sfdrcalc(length(sig_tr_mag_sfdrcalc)/2:end);
+plot(xaxis, sig_tr_mag_sfdrcalc)
+title('Distortion Power (Hamming), ff=.33')
+xlabel('fractional frequency')
+ylabel('magnitude (dB)')
+
 max_main_gen_hm = max(sig_tr_mag(l:r));
-max_side_gen_hm = max([sig_tr_mag(1:l) sig_tr_mag(r:end)]);
+max_side_gen_hm = max(sig_tr_mag_sfdrcalc);
 SFDR_HAMMING    = max_main_gen_hm - max_side_gen_hm
 
 window = blackman(length(sigout))';
@@ -78,6 +89,7 @@ sig_tr_pure = 20*log10(fftshift(abs(fft(windowed_pure))));
 sig_tr_pure = sig_tr_pure(length(sig_tr_pure)/2:end);
 [l,r] = locate_mainlobelims(sig_tr_mag);
 
+figure(3)
 subplot(2,1,2)
 
 plot(xaxis, sig_tr_mag)
@@ -93,6 +105,17 @@ ylim([-100 55])
 title('Windowed Signal Compared to its Transform (Blackman), ff=.33')
 grid on 
 
+figure(4)
+subplot(2,1,2)
+hold on
+grid on
+sig_tr_mag_sfdrcalc = 20*log10(fftshift(abs(fft(windowed_sig)-fft(windowed_pure))));
+sig_tr_mag_sfdrcalc = sig_tr_mag_sfdrcalc(length(sig_tr_mag_sfdrcalc)/2:end);
+plot(xaxis, sig_tr_mag_sfdrcalc)
+title('Distortion Power (Blackman), ff=.33')
+xlabel('fractional frequency')
+ylabel('magnitude (dB)')
+
 max_main_gen_bl = max(sig_tr_mag(l:r));
-max_side_gen_bl = max([sig_tr_mag(1:l) sig_tr_mag(r:end)]);
+max_side_gen_bl = max(sig_tr_mag_sfdrcalc);
 SFDR_BLACKMAN   = max_main_gen_bl - max_side_gen_bl
