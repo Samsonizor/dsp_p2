@@ -1,5 +1,6 @@
 %% Time domain
 ff = .33;
+ff = 0.598885610367865;
 min_periods = 10;
 max_periods = 50;
 sample_min = floor(min_periods/ff);
@@ -39,9 +40,11 @@ windowed_pure = pure_signal.*window;
 padded_length = 2^(ceil(log2(length(sigout)))+4);
 windowed_sig = [windowed_sig zeros(1, padded_length-length(sigout))];
 windowed_pure = [windowed_pure zeros(1, padded_length-length(pure_signal))];
-sig_tr_mag = 20*log10(fftshift(abs(fft(windowed_sig))));
+tmp = fftshift(abs(fft(windowed_sig)));
+sig_tr_mag = 20*log10(tmp/max(tmp));
 sig_tr_mag = sig_tr_mag(length(sig_tr_mag)/2:end);
-sig_tr_pure = 20*log10(fftshift(abs(fft(windowed_pure))));
+tmp = fftshift(abs(fft(windowed_pure)));
+sig_tr_pure = 20*log10(tmp/max(tmp));
 sig_tr_pure = sig_tr_pure(length(sig_tr_pure)/2:end);
 xaxis = linspace(0,.5, length(sig_tr_pure));
 [l,r] = locate_mainlobelims(sig_tr_mag);
@@ -57,16 +60,16 @@ plot(((l-1)*interval),sig_tr_mag(l),'rx',...
 legend('digital readout','original')
 xlabel('fractional frequency')
 ylabel('magnitude (dB)')
-xlim([.32 .34])
-ylim([-100 55])
-title('Windowed Signal Compared to its Transform (Hamming), ff=.33')
+xlim([.3 .5])
+ylim([-150 5])
+title("Windowed Signal's Transform Compared to Windowed Sinusoid (Hamming), ff=.33")
 grid on 
-
 figure(4)
 subplot(2,1,1)
 hold on
 grid on
-sig_tr_mag_sfdrcalc = 20*log10(fftshift(abs(fft(windowed_sig)-fft(windowed_pure))));
+tmp = fftshift(abs(fft(windowed_sig)-fft(windowed_pure)));
+sig_tr_mag_sfdrcalc = 20*log10(tmp/max(abs(fft(windowed_sig))));
 sig_tr_mag_sfdrcalc = sig_tr_mag_sfdrcalc(length(sig_tr_mag_sfdrcalc)/2:end);
 plot(xaxis, sig_tr_mag_sfdrcalc)
 title('Distortion Power (Hamming), ff=.33')
@@ -83,9 +86,11 @@ windowed_pure = pure_signal.*window;
 padded_length = 2^(ceil(log2(length(sigout)))+4);
 windowed_sig = [windowed_sig zeros(1, padded_length-length(sigout))];
 windowed_pure = [windowed_pure zeros(1, padded_length-length(pure_signal))];
-sig_tr_mag = 20*log10(fftshift(abs(fft(windowed_sig))));
+tmp = fftshift(abs(fft(windowed_sig)));
+sig_tr_mag = 20*log10(tmp/max(tmp));
 sig_tr_mag = sig_tr_mag(length(sig_tr_mag)/2:end);
-sig_tr_pure = 20*log10(fftshift(abs(fft(windowed_pure))));
+tmp = fftshift(abs(fft(windowed_pure)));
+sig_tr_pure = 20*log10(tmp/max(tmp));
 sig_tr_pure = sig_tr_pure(length(sig_tr_pure)/2:end);
 [l,r] = locate_mainlobelims(sig_tr_mag);
 
@@ -100,16 +105,17 @@ plot(((l-1)*interval),sig_tr_mag(l),'rx',...
 legend('digital readout','original')
 xlabel('fractional frequency')
 ylabel('magnitude (dB)')
-xlim([.32 .34])
-ylim([-100 55])
-title('Windowed Signal Compared to its Transform (Blackman), ff=.33')
+xlim([.3 .5])
+ylim([-150 5])
+title("Windowed Signal's Transform Compared to Windowed Sinusoid (Blackman), ff=.33")
 grid on 
 
 figure(4)
 subplot(2,1,2)
 hold on
 grid on
-sig_tr_mag_sfdrcalc = 20*log10(fftshift(abs(fft(windowed_sig)-fft(windowed_pure))));
+tmp = fftshift(abs(fft(windowed_sig)-fft(windowed_pure)));
+sig_tr_mag_sfdrcalc = 20*log10(tmp/max(abs(fft(windowed_sig))));
 sig_tr_mag_sfdrcalc = sig_tr_mag_sfdrcalc(length(sig_tr_mag_sfdrcalc)/2:end);
 plot(xaxis, sig_tr_mag_sfdrcalc)
 title('Distortion Power (Blackman), ff=.33')
@@ -118,4 +124,4 @@ ylabel('magnitude (dB)')
 
 max_main_gen_bl = max(sig_tr_mag(l:r));
 max_side_gen_bl = max(sig_tr_mag_sfdrcalc);
-SFDR_BLACKMAN   = max_main_gen_bl - max_side_gen_bl
+SFDR_BLACKMAN   = max_main_gen_bl - max_side_gen_bl;
