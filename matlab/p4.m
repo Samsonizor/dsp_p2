@@ -70,7 +70,7 @@ for ff = random_frequencies
     sig_tr_mag = 20*log10(fftshift(abs(fft(windowed_sig))));
     tmp = fftshift(abs(fft(windowed_sig)-fft(windowed_pure)));
     sig_tr_mag_sfdrcalc = 20*log10(tmp/max(abs(fft(windowed_sig))));
-    sig_tr_mag_sfdrcalc = sig_tr_mag_sfdrcalc(length(sig_tr_mag_sfdrcalc)/2:end);?
+    sig_tr_mag_sfdrcalc = sig_tr_mag_sfdrcalc(length(sig_tr_mag_sfdrcalc)/2:end);
     
     color = 'ro';
     if ff == .33

@@ -1,0 +1,1 @@
+figure out some sort of relationship between given sfg and something familiar so we can find direct form coefficients

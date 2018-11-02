@@ -26,7 +26,7 @@ function [ sfdr ] = find_sfdr( target, actual, win_type )
     sig_tr_mag_sfdrcalc = 20*log10(fftshift(abs(fft(windowed_sig)-fft(windowed_pure))));
     sig_tr_mag_sfdrcalc = sig_tr_mag_sfdrcalc(length(sig_tr_mag_sfdrcalc)/2:end);
     max_main_gen_hm = max(sig_tr_mag(l:r));
-    max_side_gen_hm = max(sig_tr_mag_sfdrcalc);
+    max_side_gen_hm = max([sig_tr_mag_sfdrcalc(1:l) sig_tr_mag_sfdrcalc(r:end)]);
     sfdr = max_main_gen_hm - max_side_gen_hm;
 end
 

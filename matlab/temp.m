@@ -1,7 +1,7 @@
 %% Time domain
-ff = .33;
+ff = .001;
 % ff = 0.598885610367865;
-% ff = 0.001;
+% ff = 0.3333;
 min_periods = 10;
 max_periods = 50;
 sample_min = floor(min_periods/ff);
@@ -61,8 +61,6 @@ plot(((l-1)*interval),sig_tr_mag(l),'rx',...
 legend('digital readout','original')
 xlabel('fractional frequency')
 ylabel('magnitude (dB)')
-xlim([.3 .5])
-ylim([-150 5])
 title("Windowed Signal's Transform Compared to Windowed Sinusoid (Hamming), ff=.33")
 grid on 
 figure(4)
@@ -78,7 +76,7 @@ xlabel('fractional frequency')
 ylabel('magnitude (dB)')
 
 max_main_gen_hm = max(sig_tr_mag(l:r));
-max_side_gen_hm = max([sig_tr_mag_sfdrcalc(1:l) sig_tr_mag_sfdrcalc(r:end)]);
+max_side_gen_hm = max(sig_tr_mag_sfdrcalc);
 SFDR_HAMMING    = max_main_gen_hm - max_side_gen_hm
 
 window = blackman(length(sigout))';
@@ -106,8 +104,6 @@ plot(((l-1)*interval),sig_tr_mag(l),'rx',...
 legend('digital readout','original')
 xlabel('fractional frequency')
 ylabel('magnitude (dB)')
-xlim([.3 .5])
-ylim([-150 5])
 title("Windowed Signal's Transform Compared to Windowed Sinusoid (Blackman), ff=.33")
 grid on 
 
@@ -124,5 +120,5 @@ xlabel('fractional frequency')
 ylabel('magnitude (dB)')
 
 max_main_gen_bl = max(sig_tr_mag(l:r));
-max_side_gen_bl = max([sig_tr_mag_sfdrcalc(1:l) sig_tr_mag_sfdrcalc(r:end)]);
-SFDR_BLACKMAN   = max_main_gen_bl - max_side_gen_bl
+max_side_gen_bl = max(sig_tr_mag_sfdrcalc);
+SFDR_BLACKMAN   = max_main_gen_bl - max_side_gen_bl;
