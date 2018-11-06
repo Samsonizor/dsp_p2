@@ -81,6 +81,8 @@ max_main_gen_hm = max(sig_tr_mag(l:r));
 max_side_gen_hm = max([sig_tr_mag_sfdrcalc(1:l) sig_tr_mag_sfdrcalc(r:end)]);
 SFDR_HAMMING    = max_main_gen_hm - max_side_gen_hm
 
+TD_HAMMING      = find_power(sig_tr_mag_sfdrcalc)
+
 window = blackman(length(sigout))';
 windowed_sig = sigout.*window;  
 windowed_pure = pure_signal.*window;
@@ -126,3 +128,5 @@ ylabel('magnitude (dB)')
 max_main_gen_bl = max(sig_tr_mag(l:r));
 max_side_gen_bl = max([sig_tr_mag_sfdrcalc(1:l) sig_tr_mag_sfdrcalc(r:end)]);
 SFDR_BLACKMAN   = max_main_gen_bl - max_side_gen_bl
+
+TD_BLACKMAN     = find_power(sig_tr_mag_sfdrcalc)

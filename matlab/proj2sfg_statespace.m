@@ -1,5 +1,5 @@
-function [ yn, state_out ] = proj2sfg( c, k, state_in, xn )
-% single clock cycle of the project 3 sfg
+function [ yn, state_out ] = proj2sfg_statespace( c, k, state_in, xn )
+    % single clock cycle of the project 3 sfg
 
 % check the variables first
     if length(c) ~= 3
@@ -31,13 +31,17 @@ function [ yn, state_out ] = proj2sfg( c, k, state_in, xn )
     s1 = state_in(1);
     s2 = state_in(2);
     
-    leftbox_output_right = xn+k2*xn-k2*s2;
-    rightbox_output_right = leftbox_output_right*(1+k1)-k1*s1;
-    component3 = c2*rightbox_output_right;
-    component2 = c1*(k1*leftbox_output_right+s1*(1-k1));
-    component1 = c0*(s2*(1-k2)+xn*k2);
-    yn = component1 + component2 + component3;
-    state_out(2) = (k1*leftbox_output_right+s1*(1-k1));
-    state_out(1) = rightbox_output_right;
+    ct_1 = -c2*k1+c1*(1-k1);
+    ct_2 = c2*(-k1*k2-k2)-c1*k1*k2+c0*(1-k2);
+    
+    A = [-k1 -k1*k2-k2; 1-k1 -k1*k2];
+    ct = [ct_1 ct_2];
+    d = c2*(xn+k2*xn-k2*s2+k1*xn+k1*k2*xn+k1*k2*s2-k1*s1) + ...
+        c1*(s1-k1*s1+k1*xn+k1*k2*xn-k1*k2*s2) + ...
+        c0*(k2*xn+s2-k2*s2);
+    b = [1+k2+k1+k1*k2; k1+k1*k2];
+    
+    state_out = A*state_in+b*xn;
+    yn = ct*state_in+d*xn;
 end
 
