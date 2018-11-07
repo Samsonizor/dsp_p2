@@ -76,7 +76,7 @@ for ff = random_frequencies
     if ff == .33
         color = 'rx';
     end
-    y = find_power(sig_tr_mag_sfdrcalc);
+    y = 10*log10(find_power(sig_tr_mag_sfdrcalc)/find_power(windowed_pure));
 %     if y < miny
 %         miny = y;
 %         minx = ff;

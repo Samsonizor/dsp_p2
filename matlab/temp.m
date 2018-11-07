@@ -1,6 +1,6 @@
 %% Time domain
-ff = .001;
-% ff = 0.598885610367865;
+% ff = .001;
+ff = 0.598885610367865;
 % ff = 0.3333;
 min_periods = 10;
 max_periods = 50;

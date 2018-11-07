@@ -72,11 +72,11 @@ for ff = random_frequencies
     sig_tr_mag_sfdrcalc = 20*log10(tmp/max(abs(fft(windowed_sig))));
     sig_tr_mag_sfdrcalc = sig_tr_mag_sfdrcalc(length(sig_tr_mag_sfdrcalc)/2:end);
     
-    color = 'ro';
+    color = 'ro';   
     if ff == .33
         color = 'rx';
     end
-    y = find_power(sig_tr_mag_sfdrcalc);
+    y = 10*log10(find_power(sig_tr_mag_sfdrcalc)/find_power(windowed_pure));
 %     if y < miny
 %         miny = y;
 %         minx = ff;

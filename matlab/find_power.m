@@ -8,5 +8,5 @@ function [ pwr ] = find_power( spectrum )
         tot = tot + 10^(val/10);
     end
 	% multiply tot by 2 to account for the negative frequency range
-    pwr = 10*log10(2*tot/length(spectrum));
+    pwr = 2*tot/length(spectrum);
 end
