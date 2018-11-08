@@ -1,3 +1,4 @@
+load('P2F18data.mat')
 focus = 65280;
 delta = 255;
 lookahead = 5;
