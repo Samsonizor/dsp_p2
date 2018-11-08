@@ -1,11 +1,6 @@
 syms k1 k2 c0 c1 c2 z
 z_inv = 1/z;
 
-a_1 = k1-1;
-a_2 = k1*k2;
-
-denom = 1/(1+a_1*z_inv+a_2*z_inv^2);
-
 ct_1 = -c2*k1+c1*(1-k1);
 ct_2 = c2*(-k1*k2-k2)-c1*k1*k2+c0*(1-k2);
 
@@ -19,5 +14,7 @@ I = [1 0; 0 1];
 
 H = d+ct*inv(z*I-A)*b;
 
-H = collect(H, 'z')
+[H_Numerator H_Denominator] = numden(H);
 
+H_Numerator = collect(H_Numerator, 'z')
+H_Denominator = collect(H_Denominator, 'z')

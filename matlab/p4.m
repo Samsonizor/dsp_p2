@@ -16,7 +16,6 @@ for ff = random_frequencies
     period_measurement  = wrapToPi(2*pi*ff.*n+phi);
     [~, index]          = min(abs(period_measurement(sample_min+1:sample_max+1)));
     index               = index+sample_min-1;
-%     val                 = period_measurement(index);
     samples             = cos(2*pi*ff.*n+phi);
     display_periods     = 500;
     repititions         = ceil(display_periods/(ff*index));
